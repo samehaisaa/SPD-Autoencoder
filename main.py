@@ -3,10 +3,9 @@ import torch.nn as nn
 from data_utils import generate_spd_data, get_dataloaders,generate_mixed_spd_data
 from models import SPDAutoencoder
 from train_utils import initialize_model, full_train, evaluate_model,load_or_train_model
-from visualization import plot_latent, error_distribution, matrix_analysis,plot_latent_with_classes
+from visualization import  error_distribution, matrix_analysis,plot_latent_with_classes
 from config import *
-from tensorflow import TensorDataset, DataLoader
-
+from torch.utils.data import TensorDataset, DataLoader
 
 
 
@@ -63,7 +62,6 @@ def main():
     with torch.no_grad():
         latent = [model.encoder(batch[0].to(DEVICE)) for batch in test_loader]
     latent = torch.cat(latent)
-    plot_latent(latent)
     
     # Error analysis
     error_distribution(model, test_loader)
@@ -84,5 +82,4 @@ def main():
     
 
 if __name__ == "__main__":
-    torch.manual_seed(SEED)
     main()
